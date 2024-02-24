@@ -4,7 +4,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 
@@ -16,15 +15,21 @@ import 'shared/utils.dart';
 import 'table_calendar_base.dart';
 import 'widgets/calendar_header.dart';
 import 'widgets/cell_content.dart';
+import 'package:nawat_mobile/core/theme/app_theme.dart';
 
 /// Signature for `onDaySelected` callback. Contains the selected day and focused day.
 typedef OnDaySelected = void Function(
-    DateTime selectedDay, DateTime focusedDay);
+  DateTime selectedDay,
+  DateTime focusedDay,
+);
 
 /// Signature for `onRangeSelected` callback.
 /// Contains start and end of the selected range, as well as currently focused day.
 typedef OnRangeSelected = void Function(
-    DateTime? start, DateTime? end, DateTime focusedDay);
+  DateTime? start,
+  DateTime? end,
+  DateTime focusedDay,
+);
 
 /// Modes that range selection can operate in.
 enum RangeSelectionMode { disabled, toggledOff, toggledOn, enforced }
@@ -263,10 +268,13 @@ class TableCalendar<T> extends StatefulWidget {
     this.onCalendarCreated,
   })  : assert(availableCalendarFormats.keys.contains(calendarFormat)),
         assert(availableCalendarFormats.length <= CalendarFormat.values.length),
-        assert(weekendDays.isNotEmpty
-            ? weekendDays.every(
-                (day) => day >= DateTime.monday && day <= DateTime.sunday)
-            : true),
+        assert(
+          weekendDays.isNotEmpty
+              ? weekendDays.every(
+                  (day) => day >= DateTime.monday && day <= DateTime.sunday,
+                )
+              : true,
+        ),
         focusedDay = normalizeDate(focusedDay),
         firstDay = normalizeDate(firstDay),
         lastDay = normalizeDate(lastDay),
@@ -604,7 +612,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
                 height:
                     (shorterSide - widget.calendarStyle.cellMargin.vertical) *
                         widget.calendarStyle.rangeHighlightScale,
-                color: widget.calendarStyle.rangeHighlightColor,
+                color: AppThemeConfig().scanColor,
               ),
             );
           }
@@ -732,8 +740,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
   }
 
   bool _isDayDisabled(DateTime day) {
-    return
-        day.isAfter(widget.lastDay);
+    return day.isAfter(widget.lastDay);
   }
 
   bool _isDayAvailable(DateTime day) {

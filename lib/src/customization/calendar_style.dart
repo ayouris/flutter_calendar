@@ -86,9 +86,6 @@ class CalendarStyle {
   /// TextStyle for a day cell that is the start of current range selection.
   final TextStyle rangeStartTextStyle;
 
-  /// Decoration for a day cell that is the start of current range selection.
-  final Decoration rangeStartDecoration;
-
   /// TextStyle for a day cell that is the end of current range selection.
   final TextStyle rangeEndTextStyle;
 
@@ -192,10 +189,6 @@ class CalendarStyle {
     this.rangeStartTextStyle = const TextStyle(
       color: const Color(0xFFFAFAFA),
       fontSize: 16.0,
-    ),
-    this.rangeStartDecoration = const BoxDecoration(
-      color: const Color(0xFF6699FF),
-      shape: BoxShape.circle,
     ),
     this.rangeEndTextStyle = const TextStyle(
       color: const Color(0xFFFAFAFA),

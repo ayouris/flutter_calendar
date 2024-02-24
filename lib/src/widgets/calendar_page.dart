@@ -62,9 +62,11 @@ class CalendarPage extends StatelessWidget {
       children: [
         if (dowVisible) SizedBox(height: dowHeight ?? 0),
         ...List.generate(rowAmount, (index) => index * 7)
-            .map((index) => Expanded(
-                  child: weekNumberBuilder!(context, visibleDays[index]),
-                ))
+            .map(
+              (index) => Expanded(
+                child: weekNumberBuilder!(context, visibleDays[index]),
+              ),
+            )
             .toList()
       ],
     );
@@ -84,13 +86,15 @@ class CalendarPage extends StatelessWidget {
     final rowAmount = visibleDays.length ~/ 7;
 
     return List.generate(rowAmount, (index) => index * 7)
-        .map((index) => TableRow(
-              decoration: rowDecoration,
-              children: List.generate(
-                7,
-                (id) => dayBuilder(context, visibleDays[index + id]),
-              ),
-            ))
+        .map(
+          (index) => TableRow(
+            decoration: rowDecoration,
+            children: List.generate(
+              7,
+              (id) => dayBuilder(context, visibleDays[index + id]),
+            ),
+          ),
+        )
         .toList();
   }
 }

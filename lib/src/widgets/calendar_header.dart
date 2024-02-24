@@ -4,8 +4,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:nawat_mobile/app/config/TextStyle.dart';
-import 'package:nawat_mobile/app/config/theme/AppTheme.dart';
+import 'package:nawat_mobile/core/config/text_style.dart';
+import 'package:nawat_mobile/core/theme/app_theme.dart';
 
 import '../customization/header_style.dart';
 import '../shared/utils.dart' show CalendarFormat, DayBuilder;
@@ -44,131 +44,95 @@ class CalendarHeader extends StatelessWidget {
         DateFormat.yMMMM(locale).format(focusedMonth);
 
     return Container(
-
-      padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         children: [
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: onLeftChevronTap,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    clipBehavior: Clip.antiAlias,
-                    decoration: ShapeDecoration(
-                      color: AppThemeConfig().backgroundColor,
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(width: 1, color: AppThemeConfig().autoCompleteBorder),
-                        borderRadius: BorderRadius.circular(8),
+          Row(
+            children: [
+              GestureDetector(
+                onTap: onLeftChevronTap,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  clipBehavior: Clip.antiAlias,
+                  decoration: ShapeDecoration(
+                    color: AppThemeConfig().backgroundColor,
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        width: 1,
+                        color: AppThemeConfig().autoCompleteBorder,
                       ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: SvgPicture.asset("assets/icons/chevron_left_duo.svg",color: AppThemeConfig().titleColor,),
-                        ),
-                      ],
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                ),
-                const SizedBox(width: 4,),
-                GestureDetector(
-                  onTap: onLeftChevronTap,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    clipBehavior: Clip.antiAlias,
-                    decoration: ShapeDecoration(
-                      color: AppThemeConfig().backgroundColor,
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(width: 1, color: AppThemeConfig().autoCompleteBorder),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: SvgPicture.asset("assets/icons/chevron_left.svg",color: AppThemeConfig().titleColor,),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: SvgPicture.asset(
+                          "assets/icons/chevron_left.svg",
+                          color: AppThemeConfig().titleColor,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-            Text(
-              text,
-              style: CustomTextStyle().drawerTitle,
-              textAlign: TextAlign.center,
-            ),
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: onRightChevronTap,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    clipBehavior: Clip.antiAlias,
-                    decoration: ShapeDecoration(
-                      color: AppThemeConfig().backgroundColor,
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(width: 1, color: AppThemeConfig().autoCompleteBorder),
-                        borderRadius: BorderRadius.circular(8),
+              ),
+            ],
+          ),
+          Text(
+            text,
+            style: CustomTextStyle().drawerTitle,
+            textAlign: TextAlign.center,
+          ),
+          Row(
+            children: [
+              GestureDetector(
+                onTap: onRightChevronTap,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  clipBehavior: Clip.antiAlias,
+                  decoration: ShapeDecoration(
+                    color: AppThemeConfig().backgroundColor,
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        width: 1,
+                        color: AppThemeConfig().autoCompleteBorder,
                       ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: SvgPicture.asset("assets/icons/chevron_right.svg", width: 20, height: 20,color: AppThemeConfig().titleColor,),
-                        ),
-                      ],
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                ),
-                const SizedBox(width: 4,),
-                GestureDetector(
-                  onTap: onRightChevronTap,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    clipBehavior: Clip.antiAlias,
-                    decoration: ShapeDecoration(
-                      color: AppThemeConfig().backgroundColor,
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(width: 1, color: AppThemeConfig().autoCompleteBorder),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: SvgPicture.asset(
+                          "assets/icons/chevron_right.svg",
                           width: 20,
                           height: 20,
-                          child: SvgPicture.asset("assets/icons/chevron_right_duo.svg", width: 20, height: 20,color: AppThemeConfig().titleColor,),
+                          color: AppThemeConfig().titleColor,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(
+                width: 4,
+              ),
+            ],
+          ),
         ],
       ),
     );

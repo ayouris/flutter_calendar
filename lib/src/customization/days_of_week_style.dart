@@ -31,7 +31,7 @@ class DaysOfWeekStyle {
   const DaysOfWeekStyle({
     this.dowTextFormatter,
     this.decoration = const BoxDecoration(),
-    this.weekdayStyle =const TextStyle(
+    this.weekdayStyle = const TextStyle(
       color: Color(0xFF788691),
       fontSize: 16,
       fontFamily: 'Inter',

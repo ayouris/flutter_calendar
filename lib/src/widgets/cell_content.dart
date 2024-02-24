@@ -2,10 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
-import 'package:nawat_mobile/app/config/TextStyle.dart';
-import 'package:nawat_mobile/app/config/theme/AppTheme.dart';
+import 'package:nawat_mobile/core/config/text_style.dart';
+import 'package:nawat_mobile/core/theme/app_theme.dart';
 
 import '../customization/calendar_builders.dart';
 import '../customization/calendar_style.dart';
@@ -67,32 +66,120 @@ class CellContent extends StatelessWidget {
     final margin = calendarStyle.cellMargin;
     final padding = calendarStyle.cellPadding;
     final alignment = calendarStyle.cellAlignment;
-    final duration = const Duration(milliseconds: 250);
+    const duration = Duration(milliseconds: 250);
 
-    if (int.parse(text)>DateTime.now().day) {
-      cell = calendarBuilders.disabledBuilder?.call(context, day, focusedDay) ??
-          AnimatedContainer(
-            duration: duration,
-            margin: margin,
-            padding: padding,
-            decoration: calendarStyle.disabledDecoration,
-            alignment: alignment,
-            child: Text(text,
-              style: CustomTextStyle().drawerTitle.copyWith(fontWeight: FontWeight.w500,color: AppThemeConfig().iconPrimary),
-            ),
-          );
+    if (int.parse(text) > DateTime.now().day) {
+      if (isRangeEnd || isRangeStart) {
+        cell =
+            calendarBuilders.rangeEndBuilder?.call(context, day, focusedDay) ??
+                AnimatedContainer(
+                  duration: duration,
+                  margin: margin,
+                  padding: padding,
+                  decoration: ShapeDecoration(
+                    color: AppThemeConfig().colorBlue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  alignment: alignment,
+                  child: Text(
+                    text,
+                    style: CustomTextStyle().drawerTitle.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                  ),
+                );
+      } else if (isWithinRange) {
+        cell = calendarBuilders.withinRangeBuilder
+                ?.call(context, day, focusedDay) ??
+            AnimatedContainer(
+              duration: duration,
+              margin: margin,
+              padding: padding,
+              alignment: alignment,
+              child: Text(
+                text,
+                style: CustomTextStyle().drawerTitle.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: AppThemeConfig().colorBlue,
+                    ),
+              ),
+            );
+      } else {
+        cell =
+            calendarBuilders.disabledBuilder?.call(context, day, focusedDay) ??
+                AnimatedContainer(
+                  duration: duration,
+                  margin: margin,
+                  padding: padding,
+                  decoration: calendarStyle.disabledDecoration,
+                  alignment: alignment,
+                  child: Text(
+                    text,
+                    style: CustomTextStyle().drawerTitle.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: AppThemeConfig().iconPrimary,
+                        ),
+                  ),
+                );
+      }
     } else if (isSelected) {
-      cell = calendarBuilders.selectedBuilder?.call(context, day, focusedDay) ??
-          AnimatedContainer(
-            duration: duration,
-            margin: margin,
-            padding: padding,
-            decoration: ShapeDecoration(
-              color: AppThemeConfig().colorBlue,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            ),            alignment: alignment,
-            child: Text(text, style: calendarStyle.selectedTextStyle),
-          );
+      if (isRangeEnd || isRangeStart) {
+        cell =
+            calendarBuilders.rangeEndBuilder?.call(context, day, focusedDay) ??
+                AnimatedContainer(
+                  duration: duration,
+                  margin: margin,
+                  padding: padding,
+                  decoration: ShapeDecoration(
+                    color: AppThemeConfig().colorBlue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  alignment: alignment,
+                  child: Text(
+                    text,
+                    style: CustomTextStyle().drawerTitle.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                  ),
+                );
+      } else if (isWithinRange) {
+        cell = calendarBuilders.withinRangeBuilder
+                ?.call(context, day, focusedDay) ??
+            AnimatedContainer(
+              duration: duration,
+              margin: margin,
+              padding: padding,
+              decoration: calendarStyle.withinRangeDecoration,
+              alignment: alignment,
+              child: Text(
+                text,
+                style: CustomTextStyle().drawerTitle.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: AppThemeConfig().colorBlue,
+                    ),
+              ),
+            );
+      } else {
+        cell =
+            calendarBuilders.selectedBuilder?.call(context, day, focusedDay) ??
+                AnimatedContainer(
+                  duration: duration,
+                  margin: margin,
+                  padding: padding,
+                  alignment: alignment,
+                  child: Text(
+                    text,
+                    style: calendarStyle.selectedTextStyle
+                        .copyWith(color: AppThemeConfig().colorBlue),
+                  ),
+                );
+      }
     } else if (isRangeStart) {
       cell =
           calendarBuilders.rangeStartBuilder?.call(context, day, focusedDay) ??
@@ -102,11 +189,17 @@ class CellContent extends StatelessWidget {
                 padding: padding,
                 decoration: ShapeDecoration(
                   color: AppThemeConfig().colorBlue,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
                 alignment: alignment,
-                child: Text(text,
-                  style: CustomTextStyle().drawerTitle.copyWith(fontWeight: FontWeight.w500,color: Colors.white),
+                child: Text(
+                  text,
+                  style: CustomTextStyle().drawerTitle.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                      ),
                 ),
               );
     } else if (isRangeEnd) {
@@ -117,30 +210,17 @@ class CellContent extends StatelessWidget {
             padding: padding,
             decoration: ShapeDecoration(
               color: AppThemeConfig().colorBlue,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
             ),
             alignment: alignment,
-            child: Text(text,
-              style: CustomTextStyle().drawerTitle.copyWith(fontWeight: FontWeight.w500,color: Colors.white),
+            child: Text(
+              text,
+              style: CustomTextStyle()
+                  .drawerTitle
+                  .copyWith(fontWeight: FontWeight.w500, color: Colors.white),
             ),
-          );
-    } else if (isToday && isTodayHighlighted) {
-      cell = calendarBuilders.todayBuilder?.call(context, day, focusedDay) ??
-          AnimatedContainer(
-            duration: duration,
-            margin: margin,
-            padding: padding,
-            decoration: ShapeDecoration(
-              color: AppThemeConfig().backgroundColor,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            ),
-            alignment: alignment,
-            child: Text(text, style: TextStyle(
-              color: AppThemeConfig().titleColor,
-              fontSize: 16,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w500,
-            ),),
           );
     } else if (isHoliday) {
       cell = calendarBuilders.holidayBuilder?.call(context, day, focusedDay) ??
@@ -161,34 +241,61 @@ class CellContent extends StatelessWidget {
                 padding: padding,
                 decoration: calendarStyle.withinRangeDecoration,
                 alignment: alignment,
-                child: Text(text,
-                  style: CustomTextStyle().drawerTitle.copyWith(fontWeight: FontWeight.w500,color: AppThemeConfig().colorBlue),
+                child: Text(
+                  text,
+                  style: CustomTextStyle().drawerTitle.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: AppThemeConfig().colorBlue,
+                      ),
                 ),
               );
-    } else if (isOutside) {
-      cell = calendarBuilders.outsideBuilder?.call(context, day, focusedDay) ??
-          AnimatedContainer(
-            duration: duration,
-            margin: margin,
-            padding: padding,
-            decoration: calendarStyle.disabledDecoration,
-            alignment: alignment,
-            child: Text(text,
-              style: CustomTextStyle().drawerTitle.copyWith(fontWeight: FontWeight.w500,color: AppThemeConfig().iconPrimary),
-            ), );
+    } else if (isToday) {
+      return AnimatedContainer(
+        duration: duration,
+        margin: margin,
+        padding: padding,
+        alignment: alignment,
+        child: Text(
+          text,
+          style: CustomTextStyle()
+              .drawerTitle
+              .copyWith(fontWeight: FontWeight.w500, color: Colors.red),
+        ),
+      );
     } else {
-      cell = calendarBuilders.
-      defaultBuilder?.call(context, day, focusedDay) ??
-          AnimatedContainer(
-            duration: duration,
-            margin: margin,
-            padding: padding,
-            alignment: alignment,
-            child: Text(
-              text,
-              style: CustomTextStyle().drawerTitle.copyWith(fontWeight: FontWeight.w500,),
-            ),
-          );
+      if (day.month > DateTime.now().month) {
+        cell =
+            calendarBuilders.outsideBuilder?.call(context, day, focusedDay) ??
+                AnimatedContainer(
+                  duration: duration,
+                  margin: margin,
+                  padding: padding,
+                  decoration: calendarStyle.disabledDecoration,
+                  alignment: alignment,
+                  child: Text(
+                    text,
+                    style: CustomTextStyle().drawerTitle.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
+                );
+      } else {
+        cell =
+            calendarBuilders.outsideBuilder?.call(context, day, focusedDay) ??
+                AnimatedContainer(
+                  duration: duration,
+                  margin: margin,
+                  padding: padding,
+                  decoration: calendarStyle.disabledDecoration,
+                  alignment: alignment,
+                  child: Text(
+                    text,
+                    style: CustomTextStyle().drawerTitle.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
+                );
+      }
     }
 
     return Semantics(
