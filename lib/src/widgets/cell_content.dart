@@ -120,7 +120,6 @@ class CellContent extends StatelessWidget {
                     text,
                     style: CustomTextStyle().drawerTitle.copyWith(
                           fontWeight: FontWeight.w500,
-                          color: AppThemeConfig().iconPrimary,
                         ),
                   ),
                 );
