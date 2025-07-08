@@ -36,6 +36,8 @@ enum RangeSelectionMode { disabled, toggledOff, toggledOn, enforced }
 
 /// Highly customizable, feature-packed Flutter calendar with gestures, animations and multiple formats.
 class TableCalendar<T> extends StatefulWidget {
+  final bool isCustom;
+
   /// Locale to format `TableCalendar` dates with, for example: `'en_US'`.
   ///
   /// If nothing is provided, a default locale will be used.
@@ -228,6 +230,7 @@ class TableCalendar<T> extends StatefulWidget {
       CalendarFormat.week: 'Week',
     },
     this.headerVisible = true,
+    this.isCustom = false,
     this.daysOfWeekVisible = true,
     this.pageJumpingEnabled = false,
     this.pageAnimationEnabled = true,
@@ -482,6 +485,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
                   widget.onFormatChanged?.call(format);
                 },
+                isCustom: widget.isCustom,
               );
             },
           ),
@@ -706,10 +710,19 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
     return widget.calendarBuilders.singleMarkerBuilder
             ?.call(context, day, event) ??
         Container(
-          width: markerSize,
-          height: markerSize,
+          width: 6,
+          height: 6,
           margin: widget.calendarStyle.markerMargin,
-          decoration: const BoxDecoration(color: Colors.red),
+          decoration: ShapeDecoration(
+            color: Colors.blue,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                width: 0,
+                color: AppThemeConfig().borderButtonColor,
+              ),
+              borderRadius: BorderRadius.circular(999),
+            ),
+          ),
         );
   }
 

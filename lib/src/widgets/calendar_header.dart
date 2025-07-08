@@ -1,6 +1,7 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -22,6 +23,7 @@ class CalendarHeader extends StatelessWidget {
   final ValueChanged<CalendarFormat> onFormatButtonTap;
   final Map<CalendarFormat, String> availableCalendarFormats;
   final DayBuilder? headerTitleBuilder;
+  final bool isCustom;
 
   const CalendarHeader({
     Key? key,
@@ -36,6 +38,7 @@ class CalendarHeader extends StatelessWidget {
     required this.onFormatButtonTap,
     required this.availableCalendarFormats,
     this.headerTitleBuilder,
+    required this.isCustom,
   }) : super(key: key);
 
   @override
@@ -58,11 +61,15 @@ class CalendarHeader extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   clipBehavior: Clip.antiAlias,
                   decoration: ShapeDecoration(
-                    color: AppThemeConfig().backgroundColor,
+                    color: isCustom
+                        ? Colors.transparent
+                        : AppThemeConfig().backgroundColor,
                     shape: RoundedRectangleBorder(
                       side: BorderSide(
                         width: 1,
-                        color: AppThemeConfig().autoCompleteBorder,
+                        color: isCustom
+                            ? Colors.transparent
+                            : AppThemeConfig().autoCompleteBorder,
                       ),
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -77,7 +84,9 @@ class CalendarHeader extends StatelessWidget {
                         height: 20,
                         child: SvgPicture.asset(
                           "assets/icons/chevron_left.svg",
-                          color: AppThemeConfig().titleColor,
+                          color: isCustom
+                              ? AppThemeConfig().colorBlue
+                              : AppThemeConfig().titleColor,
                         ),
                       ),
                     ],
@@ -100,11 +109,15 @@ class CalendarHeader extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   clipBehavior: Clip.antiAlias,
                   decoration: ShapeDecoration(
-                    color: AppThemeConfig().backgroundColor,
+                    color: isCustom
+                        ? Colors.transparent
+                        : AppThemeConfig().backgroundColor,
                     shape: RoundedRectangleBorder(
                       side: BorderSide(
                         width: 1,
-                        color: AppThemeConfig().autoCompleteBorder,
+                        color: isCustom
+                            ? Colors.transparent
+                            : AppThemeConfig().autoCompleteBorder,
                       ),
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -121,7 +134,9 @@ class CalendarHeader extends StatelessWidget {
                           "assets/icons/chevron_right.svg",
                           width: 20,
                           height: 20,
-                          color: AppThemeConfig().titleColor,
+                          color: isCustom
+                              ? AppThemeConfig().colorBlue
+                              : AppThemeConfig().titleColor,
                         ),
                       ),
                     ],
