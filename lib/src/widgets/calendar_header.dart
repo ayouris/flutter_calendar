@@ -4,12 +4,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' hide TextDirection;
 import 'package:nawat_mobile/core/config/text_style.dart';
 import 'package:nawat_mobile/core/theme/app_theme.dart';
 
 import '../customization/header_style.dart';
 import '../shared/utils.dart' show CalendarFormat, DayBuilder;
+import 'package:nawat_mobile/core/config/app_direction_config.dart';
 
 class CalendarHeader extends StatelessWidget {
   final dynamic locale;
@@ -83,7 +84,9 @@ class CalendarHeader extends StatelessWidget {
                         width: 20,
                         height: 20,
                         child: SvgPicture.asset(
-                          "assets/icons/chevron_left.svg",
+                          direction == TextDirection.rtl
+                              ? "assets/icons/chevron_right.svg"
+                              : "assets/icons/chevron_left.svg",
                           color: isCustom
                               ? AppThemeConfig().colorBlue
                               : AppThemeConfig().titleColor,
@@ -131,7 +134,9 @@ class CalendarHeader extends StatelessWidget {
                         width: 20,
                         height: 20,
                         child: SvgPicture.asset(
-                          "assets/icons/chevron_right.svg",
+                          direction == TextDirection.rtl
+                              ? "assets/icons/chevron_left.svg"
+                              : "assets/icons/chevron_right.svg",
                           width: 20,
                           height: 20,
                           color: isCustom

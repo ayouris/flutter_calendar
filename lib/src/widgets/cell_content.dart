@@ -25,6 +25,7 @@ class CellContent extends StatelessWidget {
   final bool isWeekend;
   final CalendarStyle calendarStyle;
   final CalendarBuilders calendarBuilders;
+  final bool isCustom;
 
   const CellContent({
     Key? key,
@@ -42,6 +43,7 @@ class CellContent extends StatelessWidget {
     required this.isDisabled,
     required this.isHoliday,
     required this.isWeekend,
+    required this.isCustom,
     this.locale,
   }) : super(key: key);
 
@@ -69,7 +71,29 @@ class CellContent extends StatelessWidget {
     const duration = Duration(milliseconds: 250);
 
     if (int.parse(text) > DateTime.now().day) {
-      if (isRangeEnd || isRangeStart) {
+      if (isCustom && day.isAfter(DateTime.now())){
+        cell =
+            calendarBuilders.rangeEndBuilder?.call(context, day, focusedDay) ??
+                AnimatedContainer(
+                  duration: duration,
+                  margin: margin,
+                  padding: padding,
+                  decoration: ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  alignment: alignment,
+                  child: Text(
+                    text,
+                    style: CustomTextStyle().drawerTitle.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: AppThemeConfig().placeholderDisabled,
+                    ),
+                  ),
+                );
+      }
+      else if (isRangeEnd || isRangeStart) {
         cell =
             calendarBuilders.rangeEndBuilder?.call(context, day, focusedDay) ??
                 AnimatedContainer(

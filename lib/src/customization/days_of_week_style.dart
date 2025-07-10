@@ -33,13 +33,13 @@ class DaysOfWeekStyle {
     this.decoration = const BoxDecoration(),
     this.weekdayStyle = const TextStyle(
       color: Color(0xFF788691),
-      fontSize: 16,
+      fontSize: 15,
       fontFamily: 'Inter',
       fontWeight: FontWeight.w400,
     ),
     this.weekendStyle = const TextStyle(
       color: Color(0xFF788691),
-      fontSize: 16,
+      fontSize: 15,
       fontFamily: 'Inter',
       fontWeight: FontWeight.w400,
     ),

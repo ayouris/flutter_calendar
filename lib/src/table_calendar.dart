@@ -632,6 +632,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
         Widget content = CellContent(
           key: ValueKey('CellContent-${day.year}-${day.month}-${day.day}'),
+          isCustom: widget.isCustom,
           day: day,
           focusedDay: focusedDay,
           calendarStyle: widget.calendarStyle,
@@ -697,10 +698,10 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
         return Stack(
           alignment: widget.calendarStyle.markersAlignment,
-          children: children,
           clipBehavior: widget.calendarStyle.canMarkersOverflow
               ? Clip.none
               : Clip.hardEdge,
+          children: children,
         );
       },
     );
