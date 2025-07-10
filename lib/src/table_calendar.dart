@@ -717,10 +717,6 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
           decoration: ShapeDecoration(
             color: Colors.blue,
             shape: RoundedRectangleBorder(
-              side: BorderSide(
-                width: 0,
-                color: AppThemeConfig().borderButtonColor,
-              ),
               borderRadius: BorderRadius.circular(999),
             ),
           ),
